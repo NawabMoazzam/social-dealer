@@ -2,13 +2,11 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
-import { useParams } from "next/navigation";
 import shortid from "shortid";
 import { useRouter } from "next-nprogress-bar";
 
 export default function CreateRoomPage() {
   const router = useRouter();
-  const { platform } = useParams();
   const {
     register,
     handleSubmit,
@@ -17,15 +15,18 @@ export default function CreateRoomPage() {
   } = useForm();
   const onSubmit = async (data) => {
     const roomId = shortid.generate();
+    const buyerId = shortid.generate();
+    const sellerId = shortid.generate();
     const buyerPassword = shortid.generate();
     const sellerPassword = shortid.generate();
     const roomData = {
-      platform,
       roomId,
-      buyerPassword,
-      sellerPassword,
+      buyerId,
       buyerEmail: data.buyerEmail,
+      buyerPassword,
+      sellerId,
       sellerEmail: data.sellerEmail,
+      sellerPassword,
     };
     // Here you would typically send roomData to your backend to save it in the database
     console.log("Room created:", roomData);

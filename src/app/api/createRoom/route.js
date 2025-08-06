@@ -7,9 +7,10 @@ export async function POST(request) {
     const data = await request.json();
     const {
       roomId,
-      platform,
+      buyerId,
       buyerEmail,
       buyerPassword,
+      sellerId,
       sellerEmail,
       sellerPassword,
     } = data;
@@ -17,9 +18,10 @@ export async function POST(request) {
     // Validate required fields
     if (
       !roomId ||
-      !platform ||
+      !buyerId ||
       !buyerEmail ||
       !buyerPassword ||
+      !sellerId ||
       !sellerEmail ||
       !sellerPassword
     ) {
@@ -34,22 +36,23 @@ export async function POST(request) {
 
     const newRoom = new Room({
       roomId,
-      platform,
+      buyerId,
       buyerEmail,
       buyerPassword,
+      sellerId,
       sellerEmail,
       sellerPassword,
     });
 
     // Save the room to the database
     await newRoom.save();
-    // automatically delete the room after 24 hours
+    // automatically delete the room after 12 hours
     setTimeout(async () => {
       await Room.deleteOne({ roomId });
-    }, 24 * 60 * 60 * 1000);
+    }, 12 * 60 * 60 * 1000);
 
     return new NextResponse(
-      JSON.stringify({ message: `Room created successfully for 24 Hours!` }),
+      JSON.stringify({ message: `Room created successfully for 12 Hours!` }),
       { status: 201 }
     );
   } catch (error) {

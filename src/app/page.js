@@ -1,6 +1,5 @@
 "use client";
 import Image from "next/image";
-import Link from "next/link";
 import { useRouter } from "next-nprogress-bar";
 
 export default function Home() {
@@ -23,16 +22,18 @@ export default function Home() {
           This is a simple app to create a room for a buyer and seller to chat
           and negotiate on social media acccounts.
         </p>
-        <Link href="/select-platform" passHref>
-          <button className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 active:bg-blue-800 transition-colors cursor-pointer">
-            Create Room
-          </button>
-        </Link>
-        <Link href="/join-room" passHref>
-          <button className="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded hover:bg-gray-300 dark:hover:bg-gray-600 active:bg-gray-400 dark:active:bg-gray-800 transition-colors cursor-pointer">
-            Join Room
-          </button>
-        </Link>
+        <button
+          className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 active:bg-blue-800 transition-colors cursor-pointer"
+          onClick={() => router.push("/create-room")}
+        >
+          Create Room
+        </button>
+        <button
+          className="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded hover:bg-gray-300 dark:hover:bg-gray-600 active:bg-gray-400 dark:active:bg-gray-800 transition-colors cursor-pointer"
+          onClick={() => router.push("/join-room")}
+        >
+          Join Room
+        </button>
       </main>
     </div>
   );
