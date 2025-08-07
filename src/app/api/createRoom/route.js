@@ -36,12 +36,16 @@ export async function POST(request) {
 
     const newRoom = new Room({
       roomId,
-      buyerId,
-      buyerEmail,
-      buyerPassword,
-      sellerId,
-      sellerEmail,
-      sellerPassword,
+      buyer: {
+        buyerId,
+        email: buyerEmail,
+        password: buyerPassword,
+      },
+      seller: {
+        sellerId,
+        email: sellerEmail,
+        password: sellerPassword,
+      },
     });
 
     // Save the room to the database

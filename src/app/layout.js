@@ -2,6 +2,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import ToastContainerComponent from "./component/ToastContainer";
 import ProgressBarComponent from "./component/ProgressBar";
+import Header from "./component/Header";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -26,6 +27,7 @@ export default function RootLayout({ children }) {
       >
         <ProgressBarComponent />
         <ToastContainerComponent />
+        <Header />
         {children}
       </body>
     </html>
