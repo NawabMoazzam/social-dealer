@@ -28,8 +28,6 @@ export default function CreateRoomPage() {
       sellerEmail: data.sellerEmail,
       sellerPassword,
     };
-    // Here you would typically send roomData to your backend to save it in the database
-    console.log("Room created:", roomData);
     const response = await fetch(`/api/createRoom`, {
       method: "POST",
       headers: {

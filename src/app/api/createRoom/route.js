@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import connectToDatabase from "@/lib/mongodb";
 import Room from "@/model/RoomSchema";
+import { sendEmailToBuyer, sendEmailToSeller } from "@/utils/email";
 
 export async function POST(request) {
   try {
@@ -50,6 +51,11 @@ export async function POST(request) {
 
     // Save the room to the database
     await newRoom.save();
+    // Send email to buyer
+    await sendEmailToBuyer(buyerEmail, roomId, buyerPassword);
+    // Send email to seller
+    await sendEmailToSeller(sellerEmail, roomId, sellerPassword);
+
     // automatically delete the room after 12 hours
     setTimeout(async () => {
       await Room.deleteOne({ roomId });

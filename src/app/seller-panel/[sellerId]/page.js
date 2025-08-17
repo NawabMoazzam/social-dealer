@@ -1,15 +1,24 @@
 "use client";
+import { useState } from "react";
 
 export default function SellerPanel() {
   return (
     <div className="font-sans flex min-h-screen">
-      <aside className="max-w-1/4 p-8 w-full max-h-screen flex flex-col items-center justify-center border-r border-gray-800 overflow-auto">
+      <aside className="max-w-1/4 p-8 w-full max-h-screen flex flex-col gap-4 items-center justify-center border-r border-gray-800 overflow-auto">
         <h1 className="text-3xl font-semibold">Seller Panel</h1>
-        <p className="text-lg text-gray-600 dark:text-gray-400">
-          This is the seller panel where you can manage your room and chat with
-          the buyer.
-        </p>
-        <div className="flex flex-col gap-4 mt-8">
+        <div className="flex items-center self-start gap-4">
+          <span className="rounded-full border-8 border-red-500"></span>
+          <p className="text-sm font-bold text-gray-600 dark:text-gray-400">
+            Buyer Status
+          </p>
+        </div>
+        <div className="flex items-center self-start gap-4">
+          <span className="rounded-full border-8 border-red-500"></span>
+          <p className="text-sm font-bold text-gray-600 dark:text-gray-400">
+            Payment Status
+          </p>
+        </div>
+        <div className="flex flex-col gap-4">
           <input
             type="text"
             placeholder="Enter your account username"
