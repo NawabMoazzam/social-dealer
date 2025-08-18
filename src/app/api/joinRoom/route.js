@@ -1,11 +1,14 @@
 import { NextResponse } from "next/server";
 import connectToDatabase from "@/lib/mongodb";
 import Room from "@/model/RoomSchema";
+import { StreamChat } from "stream-chat";
 
 export async function POST(request) {
   try {
     const data = await request.json();
     const { roomId, password } = data;
+    const streamApi = process.env.STREAM_API_KEY;
+    const streamSecret = process.env.STREAM_API_SECRET;
 
     // Validate required fields
     if (!roomId || !password) {
@@ -33,10 +36,31 @@ export async function POST(request) {
       );
     }
 
+    const serverClient = StreamChat.getInstance(streamApi, streamSecret);
+    await serverClient.upsertUsers([
+      {
+        id: room.buyer.buyerId,
+        name: "Buyer",
+        image: `https://getstream.io/random_png/?name=Buyer`,
+      },
+      {
+        id: room.seller.sellerId,
+        name: "Seller",
+        image: `https://getstream.io/random_png/?name=Seller`,
+      },
+    ]);
+
+    // Create or get the channel
+    const channel = serverClient.channel("messaging", room.roomId, {
+      image: "https://getstream.io/random_png/?name=Social-Dealer",
+      name: "Dealing Room",
+      members: [room.buyer.buyerId, room.seller.sellerId], // 👈 multiple members here
+      created_by_id: "nawabmoazzam",
+    });
+
+    await channel.create();
+
     if (room.buyer.password === password) {
-      //reditect to buyer's panel
-      room.buyer.isJoined = true;
-      await room.save();
       const response = new NextResponse(
         JSON.stringify({
           message: "Successfully joined the room as Buyer",
@@ -54,9 +78,6 @@ export async function POST(request) {
       });
       return response;
     } else if (room.seller.password === password) {
-      //reditect to seller's panel
-      room.seller.isJoined = true;
-      await room.save();
       const response = new NextResponse(
         JSON.stringify({
           message: "Successfully joined the room as Seller",

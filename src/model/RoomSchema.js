@@ -4,7 +4,6 @@ const buyerSchema = new mongoose.Schema({
   buyerId: { type: String, required: true, unique: true },
   email: { type: String, required: true },
   password: { type: String, required: true },
-  isJoined: { type: Boolean, default: false },
   isPaymentDone: { type: Boolean, default: false },
 });
 
@@ -12,7 +11,6 @@ const sellerSchema = new mongoose.Schema({
   sellerId: { type: String, required: true, unique: true },
   email: { type: String, required: true },
   password: { type: String, required: true },
-  isJoined: { type: Boolean, default: false },
   accountEmail: { type: String},
   accountPassword: { type: String},
 });

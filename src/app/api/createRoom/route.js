@@ -15,6 +15,7 @@ export async function POST(request) {
       sellerEmail,
       sellerPassword,
     } = data;
+    console.log(data);
 
     // Validate required fields
     if (

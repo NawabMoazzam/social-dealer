@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "cookies-next": "^6.1.0",
     "mongoose": "^8.17.0",
     "next": "15.4.5",
     "next-nprogress-bar": "^2.4.7",
@@ -17,7 +18,9 @@
     "react-dom": "19.1.0",
     "react-hook-form": "^7.62.0",
     "react-toastify": "^11.0.5",
-    "shortid": "^2.2.17"
+    "shortid": "^2.2.17",
+    "stream-chat": "^9.16.0",
+    "stream-chat-react": "^13.3.0"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
