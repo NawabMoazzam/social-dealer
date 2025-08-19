@@ -11,19 +11,16 @@ const sellerSchema = new mongoose.Schema({
   sellerId: { type: String, required: true, unique: true },
   email: { type: String, required: true },
   password: { type: String, required: true },
-  accountEmail: { type: String},
-  accountPassword: { type: String},
+  accountEmail: { type: String },
+  accountPassword: { type: String },
 });
 
-const roomSchema = new mongoose.Schema(
-  {
-    roomId: { type: String, required: true, unique: true },
-    buyer: buyerSchema,
-    seller: sellerSchema,
-  },
-  {
-    timestamps: true,
-  }
-);
+const roomSchema = new mongoose.Schema({
+  roomId: { type: String, required: true, unique: true },
+  buyer: buyerSchema,
+  seller: sellerSchema,
+  createdAt: { type: Date, default: Date.now },
+  expireAt: { type: Date, index: { expires: 0 } }, // TTL index
+});
 const Room = mongoose.models.Room || mongoose.model("Room", roomSchema);
 export default Room;

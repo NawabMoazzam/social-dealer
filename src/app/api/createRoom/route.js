@@ -15,7 +15,6 @@ export async function POST(request) {
       sellerEmail,
       sellerPassword,
     } = data;
-    console.log(data);
 
     // Validate required fields
     if (
@@ -48,6 +47,7 @@ export async function POST(request) {
         email: sellerEmail,
         password: sellerPassword,
       },
+      expireAt: new Date(Date.now() + 12 * 60 * 60 * 1000), // 12 hour
     });
 
     // Save the room to the database
@@ -56,11 +56,6 @@ export async function POST(request) {
     await sendEmailToBuyer(buyerEmail, roomId, buyerPassword);
     // Send email to seller
     await sendEmailToSeller(sellerEmail, roomId, sellerPassword);
-
-    // automatically delete the room after 12 hours
-    setTimeout(async () => {
-      await Room.deleteOne({ roomId });
-    }, 12 * 60 * 60 * 1000);
 
     return new NextResponse(
       JSON.stringify({ message: `Room created successfully for 12 Hours!` }),
