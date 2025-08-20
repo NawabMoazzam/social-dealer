@@ -1,15 +1,18 @@
 "use client";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
-import { useRouter } from "next-nprogress-bar";
+import { useRouter } from "nextjs-toploader/app";
+import { Loader2Icon } from "lucide-react";
 
 export default function JoinRoomPage() {
+  const [isSubmitted, setIsSubmitted] = useState(false);
   const router = useRouter();
   const {
     register,
     handleSubmit,
     watch,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm();
 
   const onSubmit = async (data) => {
@@ -23,6 +26,7 @@ export default function JoinRoomPage() {
     const result = await response.json();
     if (response.ok) {
       toast.success(result.message);
+      setIsSubmitted(true);
       if (result.isBuyer) {
         router.push(`/buyer-panel/${result.buyerId}`);
       } else {
@@ -30,6 +34,7 @@ export default function JoinRoomPage() {
       }
     } else {
       toast.error(result.error || "Failed to join room");
+      setIsSubmitted(false);
     }
   };
   return (
@@ -58,12 +63,21 @@ export default function JoinRoomPage() {
           {...register("password", { required: true })}
           required
         />
-        <button
-          type="submit"
-          className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 active:bg-blue-800 transition-colors cursor-pointer"
-        >
-          Join Room
-        </button>
+        {!isSubmitting && !isSubmitted && (
+          <button className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 active:bg-blue-800 transition-colors cursor-pointer">
+            Join Room
+          </button>
+        )}
+        {isSubmitting && (
+          <button className="px-4 py-2 bg-blue-900 text-white rounded cursor-wait opacity-50 flex items-center justify-center gap-2">
+            <Loader2Icon className="animate-spin" /> Joining Room...
+          </button>
+        )}
+        {isSubmitted && (
+          <button className="px-4 py-2 bg-blue-900 text-white rounded cursor-wait opacity-50">
+            Room Joined!
+          </button>
+        )}
       </form>
     </div>
   );

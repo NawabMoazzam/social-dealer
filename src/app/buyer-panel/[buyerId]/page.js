@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
+import { useTheme } from "next-themes";
 import {
   useCreateChatClient,
   Chat,
@@ -14,6 +15,8 @@ import {
 import "stream-chat-react/dist/css/v2/index.css";
 
 export default function BuyerPanel() {
+  const { theme, systemTheme } = useTheme();
+  const currentTheme = theme === "system" ? systemTheme : theme;
   const pathname = usePathname();
   const [userToken, setUserToken] = useState(null);
   const [roomId, setRoomId] = useState(null);
@@ -53,15 +56,22 @@ export default function BuyerPanel() {
 
   return (
     <div className="font-sans flex min-h-[85vh] max-h-[80vh]">
-      <aside className="max-w-1/4 p-8 w-full max-h-screen flex flex-col gap-4 items-center justify-center border-r border-gray-800 overflow-auto">
-        <h1 className="text-3xl font-semibold">Buyer Panel {userId}</h1>
+      <aside className="max-w-1/4 p-8 w-full max-h-screen md:flex flex-col gap-4 items-center justify-center border-r border-gray-800 overflow-auto hidden">
+        <h1 className="text-3xl font-semibold">Buyer Panel</h1>
       </aside>
 
       <main className="flex flex-col items-center w-full max-h-full">
         <div className="w-full max-w-full h-full max-h-full">
           {!userToken && <div>Loading....</div>}
           {client && channel && userToken && (
-            <Chat client={client} theme="str-chat__theme-dark">
+            <Chat
+              client={client}
+              theme={
+                currentTheme === "dark"
+                  ? "str-chat__theme-dark"
+                  : "str-chat__theme-light"
+              }
+            >
               <Channel channel={channel}>
                 <Window>
                   <ChannelHeader />

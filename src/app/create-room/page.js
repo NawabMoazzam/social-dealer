@@ -1,17 +1,21 @@
 "use client";
 import React from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import shortid from "shortid";
-import { useRouter } from "next-nprogress-bar";
+import { useRouter } from "nextjs-toploader/app";
+import { Loader2Icon } from "lucide-react";
+import { set } from "mongoose";
 
 export default function CreateRoomPage() {
+  const [isSubmitted, setIsSubmitted] = useState(false);
   const router = useRouter();
   const {
     register,
     handleSubmit,
     watch,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm();
   const onSubmit = async (data) => {
     const roomId = shortid.generate();
@@ -37,10 +41,12 @@ export default function CreateRoomPage() {
     });
     if (response.ok) {
       const result = await response.json();
+      setIsSubmitted(true);
       toast.success(result.message);
       router.push(`/join-room`);
     } else {
       const error = await response.json();
+      setIsSubmitted(false);
       toast.error(error.message || "Failed to create room");
     }
   };
@@ -75,12 +81,27 @@ export default function CreateRoomPage() {
           {...register("sellerEmail", { required: true })}
           required
         />
-        <button
-          type="submit"
-          className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 active:bg-blue-800 transition-colors cursor-pointer"
-        >
-          Create Room
-        </button>
+        {!isSubmitting && !isSubmitted && (
+          <button className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 active:bg-blue-800 transition-colors cursor-pointer">
+            Create Room
+          </button>
+        )}
+        {isSubmitting && (
+          <button
+            disabled
+            className="px-4 py-2 bg-blue-900 text-white rounded cursor-wait opacity-50 flex items-center justify-center gap-2"
+          >
+            <Loader2Icon className="animate-spin" /> Creating Room...
+          </button>
+        )}
+        {isSubmitted && (
+          <button
+            disabled
+            className="px-4 py-2 bg-blue-900 text-white rounded cursor-wait opacity-50"
+          >
+            Room Created!
+          </button>
+        )}
       </form>
     </div>
   );
