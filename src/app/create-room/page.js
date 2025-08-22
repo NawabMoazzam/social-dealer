@@ -6,7 +6,6 @@ import { toast } from "react-toastify";
 import shortid from "shortid";
 import { useRouter } from "nextjs-toploader/app";
 import { Loader2Icon } from "lucide-react";
-import { set } from "mongoose";
 
 export default function CreateRoomPage() {
   const [isSubmitted, setIsSubmitted] = useState(false);

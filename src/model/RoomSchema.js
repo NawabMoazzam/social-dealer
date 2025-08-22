@@ -11,8 +11,8 @@ const sellerSchema = new mongoose.Schema({
   sellerId: { type: String, required: true, unique: true },
   email: { type: String, required: true },
   password: { type: String, required: true },
-  accountEmail: { type: String },
-  accountPassword: { type: String },
+  accountEmail: { type: String, default: "" },
+  accountPassword: { type: String, default: "" },
 });
 
 const roomSchema = new mongoose.Schema({

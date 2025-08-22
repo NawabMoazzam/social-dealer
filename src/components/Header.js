@@ -46,7 +46,7 @@ export default function Header() {
     }
   };
   return (
-    <header className="bg-white dark:bg-gray-800 shadow-md">
+    <header className="bg-white dark:bg-gray-800 shadow-md min-h-[15vh] max-h-[15vh]">
       <div className="flex items-center justify-between max-w-7xl mx-auto px-4 py-6">
         <Link href="/" className="flex items-center">
           <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
