@@ -4,6 +4,7 @@ import { usePathname } from "next/navigation";
 import { useTheme } from "next-themes";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
+import { Loader2 } from "lucide-react";
 import {
   useCreateChatClient,
   Chat,
@@ -139,7 +140,11 @@ export default function SellerPanel() {
 
       <main className="flex flex-col items-center w-full max-h-full">
         <div className="w-full max-w-full h-full max-h-full">
-          {!userToken && <div>Loading....</div>}
+          {!userToken && (
+            <div className="flex items-center justify-center h-full">
+              <Loader2 size={100} className="animate-spin" />
+            </div>
+          )}
           {client && channel && userToken && (
             <Chat
               client={client}
