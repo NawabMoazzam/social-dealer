@@ -13,6 +13,9 @@ const sellerSchema = new mongoose.Schema({
   password: { type: String, required: true },
   accountEmail: { type: String, default: "" },
   accountPassword: { type: String, default: "" },
+  holderName: { type: String, default: "" },
+  bankName: { type: String, default: "" },
+  bankNumber: { type: String, default: "" },
 });
 
 const roomSchema = new mongoose.Schema({

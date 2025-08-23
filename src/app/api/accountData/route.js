@@ -3,7 +3,7 @@ import connectToDatabase from "@/lib/mongodb";
 import Room from "@/model/RoomSchema";
 
 export async function POST(request) {
-  const { roomId, accountEmail, accountPassword } = await request.json();
+  const { roomId, accountEmail, accountPassword, bankName, bankNumber } = await request.json();
 
   try {
     await connectToDatabase();
@@ -22,6 +22,8 @@ export async function POST(request) {
 
     room.seller.accountEmail = accountEmail;
     room.seller.accountPassword = accountPassword;
+    room.seller.bankName = bankName;
+    room.seller.bankNumber = bankNumber;
     await room.save();
 
     return NextResponse.json(

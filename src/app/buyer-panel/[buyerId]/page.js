@@ -14,6 +14,7 @@ import {
   Window,
 } from "stream-chat-react";
 import "stream-chat-react/dist/css/v2/index.css";
+import { Button } from "@/components/ui/button";
 
 export default function BuyerPanel() {
   const { theme, systemTheme } = useTheme();
@@ -116,36 +117,45 @@ export default function BuyerPanel() {
           </div>
         )}
         {paymentReceived && (
-          <blockquote className="flex items-center gap-4 border-l-2 pl-3 italic text-xs font-semibold">
-            <div className="flex flex-col gap-2">
-              <p>Email:</p>
-              <p>Password:</p>
-            </div>
-            <div className="flex flex-col gap-2">
-              <code className="bg-muted relative rounded px-[0.3rem] py-[0.2rem] font-mono flex items-center justify-between gap-2">
-                <p>{accEmail}</p>
-                <button
-                  className="cursor-pointer p-0.5 rounded hover:bg-gray-600 transition-colors"
-                  onClick={() => {
-                    navigator.clipboard.writeText(accEmail);
-                  }}
-                >
-                  <Clipboard size={14} />
-                </button>
-              </code>
-              <code className="bg-muted relative rounded px-[0.3rem] py-[0.2rem] font-mono flex items-center justify-between gap-2">
-                <p>{accPassword}</p>
-                <button
-                  className="cursor-pointer p-0.5 rounded hover:bg-gray-600 transition-colors"
-                  onClick={() => {
-                    navigator.clipboard.writeText(accPassword);
-                  }}
-                >
-                  <Clipboard size={14} />
-                </button>
-              </code>
-            </div>
-          </blockquote>
+          <div className="flex flex-col gap-3 items-center">
+            <p className="text-xs text-center text-neutral-500">
+              Payment received: Rs.50,000/✅
+              <br />
+              Make sure you verify everything in account and secure it before
+              clicking on Release Payment, Here are your account details:
+            </p>
+            <blockquote className="flex items-center gap-4 border-l-2 pl-3 italic text-xs font-semibold">
+              <div className="flex flex-col gap-2">
+                <p>Email:</p>
+                <p>Password:</p>
+              </div>
+              <div className="flex flex-col gap-2">
+                <code className="bg-muted relative rounded px-[0.3rem] py-[0.2rem] font-mono flex items-center justify-between gap-2">
+                  <p>{accEmail}</p>
+                  <button
+                    className="cursor-pointer p-0.5 rounded hover:bg-gray-600 transition-colors"
+                    onClick={() => {
+                      navigator.clipboard.writeText(accEmail);
+                    }}
+                  >
+                    <Clipboard size={14} />
+                  </button>
+                </code>
+                <code className="bg-muted relative rounded px-[0.3rem] py-[0.2rem] font-mono flex items-center justify-between gap-2">
+                  <p>{accPassword}</p>
+                  <button
+                    className="cursor-pointer p-0.5 rounded hover:bg-gray-600 transition-colors"
+                    onClick={() => {
+                      navigator.clipboard.writeText(accPassword);
+                    }}
+                  >
+                    <Clipboard size={14} />
+                  </button>
+                </code>
+              </div>
+            </blockquote>
+            <Button className="cursor-pointer">Release Payment</Button>
+          </div>
         )}
       </aside>
 
